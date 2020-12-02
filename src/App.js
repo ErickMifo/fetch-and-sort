@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
+import SearchIcon from '@material-ui/icons/Search';
 
 function App() {
 
@@ -34,27 +35,38 @@ if (name === '') {
 
 
     <div className="App">
-      <form onSubmit={(e) => {
-        e.preventDefault()
-        setName(inputName)
+      
+      <form 
+      className='formContainer' 
+      onSubmit={(e) => {
+      e.preventDefault()
+      setName(inputName)
       }}>
 
-      <input onChange={(e) => {
-        setInputName(e.target.value)
+      <input 
+      placeholder="Pesquisar perfil"
+      className='inputField' 
+      onChange={(e) => {
+      setInputName(e.target.value)
       }} type="text" autoComplete="off" />
 
-      <button> Pesquisar </button>
+     <button className="buttonSearch"><SearchIcon/></button> 
+
+
+
       </form>
+
+
         <button onClick={() => {
           setClick(!click)
-          setData([...data.reverse()])}}> {click ? 'Ordem decrescente' : 'Ordem crescente'} </button>
+          setData([...data.reverse()])}}> {click ? 'Ordem decrescente ↑' : 'Ordem crescente ↓'} </button>
 
 
-        <ul>
+        <ul >
 {
      data.map((item, index) => {
        return (
-         <li key={index}> {item.name} </li>
+         <li className='repos' key={index}> {item.name} </li>
        )
        })
 }

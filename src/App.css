@@ -1,4 +1,57 @@
+body {
+  background-color: #fbfff1;
+}
+ul,
+li {
+  list-style-type: none;
+}
+
+li {
+  line-height: 2.6;
+}
+button {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+}
+
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 100px;
+}
+
+.formContainer {
+  margin-bottom: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: solid 1px #3d52d5;
+  width: 40vw;
+  height: 6vh;
+}
+
+.inputField {
+  padding: 1.5px 2.5px;
+  margin: 8px 5px;
+  box-sizing: border-box;
+  width: 35vw;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+.buttonSearch {
+  font-size: 16px;
+}
+
+.repos {
+  background-color: #b4c5e4;
+  width: 20vw;
+  border: 1px solid #3d52d5;
+  margin-bottom: 20px;
+  padding-left: 100px;
 }

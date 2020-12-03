@@ -7,12 +7,14 @@ function App() {
 
   const[inputName, setInputName] = useState('')
   const[name, setName] = useState('');
-  const[data, setData] = useState([''])
+  const[repos, setRepos] = useState([''])
   const[click, setClick] = useState(true)
+  const[user, setUser] = useState([''])
 
 
-  const instance = axios.create ({
-    baseURL: `https://api.github.com/users/${name}/repos`
+
+  const instance= axios.create ({
+    baseURL: `https://api.github.com/users/${name}`
 });
 
 
@@ -21,8 +23,11 @@ if (name === '') {
   return null
 } else {
     async function getData() {
-        const request = await instance.get('')
-          setData(request.data)
+        const requestRepos = await instance.get('/repos')
+          setRepos(requestRepos.data)
+        const requestUser = await instance.get('')
+          setUser(requestUser.data)
+          
     }
   
     getData()
@@ -56,15 +61,30 @@ if (name === '') {
 
       </form>
 
+      <div className={name === '' ? 'userInitialState' : 'displayUser'}>
 
-        <button onClick={() => {
+        <img className="avatar" src={`${user.avatar_url}.jpg`} alt='avatar' />
+        <div className="followContainer">
+          <h3 style={{marginRight: '10px'}}> Followers: {user.followers}</h3>
+          <h3> Following: {user.following}</h3>
+        </div>
+
+          <h3>{user.email}</h3>
+          <h4 style={{marginBottom: '50px'}}>{user.bio}</h4>
+
+      </div>
+
+
+        <button 
+          style={{marginBottom: '30px'}}
+          onClick={() => {
           setClick(!click)
-          setData([...data.reverse()])}}> {click ? 'Ordem decrescente ↑' : 'Ordem crescente ↓'} </button>
+          setRepos([...repos.reverse()])}}> {click ? 'Ordem decrescente ↑' : 'Ordem crescente ↓'} </button>
 
 
         <ul >
 {
-     data.map((item, index) => {
+     repos.map((item, index) => {
        return (
          <li className='repos' key={index}> {item.name} </li>
        )

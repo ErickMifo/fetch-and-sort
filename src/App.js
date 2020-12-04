@@ -10,30 +10,51 @@ function App() {
   const[repos, setRepos] = useState([''])
   const[click, setClick] = useState(true)
   const[user, setUser] = useState([''])
+  const[fullRepoName, setFullRepoName] = useState('')
+  const[repoDescription, setRepoDescription] = useState([''])
 
 
 
-  const instance= axios.create ({
+  const usersAxios = axios.create ({
     baseURL: `https://api.github.com/users/${name}`
 });
+
+  const reposAxios =  axios.create ({
+    baseURL: `https://api.github.com/repos/${fullRepoName}`
+});
+
 
 
  useEffect(() => {
 if (name === '') {
   return null
 } else {
-    async function getData() {
-        const requestRepos = await instance.get('/repos')
+    async function getUserData() {
+        const requestRepos = await usersAxios.get('/repos')
           setRepos(requestRepos.data)
-        const requestUser = await instance.get('')
+        const requestUser = await usersAxios.get('')
           setUser(requestUser.data)
           
     }
   
-    getData()
+    getUserData()
  
 
-  }}, [name]) 
+  }
+
+  
+  if (fullRepoName === '') {
+    return null
+  } else {
+      async function getRepoData() {
+          const requestRepoDescription = await reposAxios.get('')
+          setRepoDescription(requestRepoDescription.data)
+            
+      }
+
+      getRepoData()
+
+}}, [name, fullRepoName]) 
 
 
   return (
@@ -74,6 +95,12 @@ if (name === '') {
 
       </div>
 
+<div className={fullRepoName === '' ? 'repoFullNameNull' : "repoDescription"}>
+  <p>   Descrição: {repoDescription.description} </p>
+  <p>       Estrelas:  {repoDescription.stargazers_count}</p>
+  <p>      Linguagem: {repoDescription.language} </p>
+  <p>      Url: {repoDescription.url}</p>
+</div>
 
         <button 
           style={{marginBottom: '30px'}}
@@ -86,11 +113,12 @@ if (name === '') {
 {
      repos.map((item, index) => {
        return (
-         <li className='repos' key={index}> {item.name} </li>
+         <li className='repos' key={index} onClick={() => {setFullRepoName(item.full_name)}}> {item.name}  </li>
        )
        })
 }
        </ul>
+       
 
 
     </div>

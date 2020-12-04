@@ -54,6 +54,7 @@ button {
   border: 1px solid #3d52d5;
   margin-bottom: 20px;
   padding-left: 100px;
+  cursor: pointer;
 }
 
 .avatar {
@@ -76,4 +77,14 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.repoDescription {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.repoFullNameNull {
+  display: none;
 }

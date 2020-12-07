@@ -11,7 +11,7 @@ li {
 }
 button {
   border: none;
-  background-color: white;
+  background-color: #fbfff1;
   cursor: pointer;
   outline: none;
 }
@@ -80,11 +80,41 @@ button {
 }
 
 .repoDescription {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -200px;
+  margin-left: -270px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
-  margin-bottom: 20px;
+  border: 1px solid black;
+  width: 45vw;
+  height: 50vh;
+  z-index: 1;
+  background-color: #b4c5e4;
+  animation: descriptionAnimation 0.5s;
 }
 
-.repoFullNameNull {
+@keyframes descriptionAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.clearDescription {
+  position: absolute;
+  top: -25px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 26px;
+  z-index: 10;
+}
+
+.displayNone {
   display: none;
 }

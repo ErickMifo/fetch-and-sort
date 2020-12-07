@@ -8,7 +8,6 @@ function App() {
   const[inputName, setInputName] = useState('')
   const[name, setName] = useState('');
   const[repos, setRepos] = useState([''])
-  const[click, setClick] = useState(true)
   const[user, setUser] = useState([''])
   const[fullRepoName, setFullRepoName] = useState('')
   const[repoDescription, setRepoDescription] = useState([''])
@@ -26,8 +25,11 @@ function App() {
 
 
  useEffect(() => {
+
 if (name === '') {
+
   return null
+  
 } else {
     async function getUserData() {
         const requestRepos = await usersAxios.get('/repos')
@@ -38,7 +40,7 @@ if (name === '') {
     }
   
     getUserData()
- 
+  
 
   }
 
@@ -54,7 +56,13 @@ if (name === '') {
 
       getRepoData()
 
+
 }}, [name, fullRepoName]) 
+
+
+  useEffect(() => {
+    repos.sort((a,b) => (a.stargazers_count > b.stargazers_count) ? 1 : ((b.stargazers_count > a.stargazers_count) ? -1 : 0))
+  }, [repos])
 
 
   return (
@@ -95,25 +103,39 @@ if (name === '') {
 
       </div>
 
-<div className={fullRepoName === '' ? 'repoFullNameNull' : "repoDescription"}>
+<div className={fullRepoName === '' ? 'displayNone' : "repoDescription"}>
+  <p className="clearDescription" onClick={() => { setFullRepoName('') }}> x </p>
   <p>   Descrição: {repoDescription.description} </p>
   <p>       Estrelas:  {repoDescription.stargazers_count}</p>
   <p>      Linguagem: {repoDescription.language} </p>
-  <p>      Url: {repoDescription.url}</p>
+  <p>      Url: <a rel="noopener noreferrer" target="_blank" href={repoDescription.html_url}>{repoDescription.html_url}</a></p>
 </div>
+
+<div className={name === '' ? 'displayNone' : "buttonContainer"}>
 
         <button 
           style={{marginBottom: '30px'}}
           onClick={() => {
-          setClick(!click)
-          setRepos([...repos.reverse()])}}> {click ? 'Ordem decrescente ↑' : 'Ordem crescente ↓'} </button>
+            console.log(repos)
 
+          setRepos([...repos.sort((a,b) => (b.stargazers_count > a.stargazers_count) ? 1 : ((a.stargazers_count > b.stargazers_count) ? -1 : 0))])}}> 
+   Ordem decrescente ↑
+          </button>
+
+          <button 
+          style={{marginBottom: '30px'}}
+          onClick={() => {
+            console.log(repos)
+          setRepos([...repos.sort((a,b) => (a.stargazers_count > b.stargazers_count) ? 1 : ((b.stargazers_count > a.stargazers_count) ? -1 : 0))])}}> 
+          Ordem crescente ↓
+          </button>
+</div>
 
         <ul >
 {
      repos.map((item, index) => {
        return (
-         <li className='repos' key={index} onClick={() => {setFullRepoName(item.full_name)}}> {item.name}  </li>
+         <li className='repos' key={index} onClick={() => {setFullRepoName(item.full_name)}}> {item.name}  {item.stargazers_count}</li>
        )
        })
 }
